@@ -118,3 +118,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mCursorAdapter.swapCursor(null);
     }
 }
+
+
+//metirialdesignicons.com
