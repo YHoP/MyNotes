@@ -1,5 +1,6 @@
 package com.example.yhop.mynotes;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -35,9 +36,40 @@ public class EditorActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        //  int id = item.getItemId();
+        int id = item.getItemId();
 
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finishEditing();
+                break;
+        }
+
+        return true;
+    }
+
+    private void finishEditing(){
+        String newText = mEditText.getText().toString().trim();
+        switch (action){
+            case Intent.ACTION_INSERT:
+                if(newText.length() == 0){
+                    setResult(RESULT_CANCELED);
+                } else {
+                  insertNote(newText);
+                }
+        }
+        finish();
+    }
+
+    private void insertNote(String noteText) {
+        ContentValues values = new ContentValues();
+        values.put(DBOpenHelper.NOTE_TEXT, noteText);
+        getContentResolver().insert(NotesProvider.CONTENT_URI, values);
+        setResult(RESULT_OK);
+    }
+
+    @Override
+    public void onBackPressed(){
+        finishEditing();
     }
 
 }
