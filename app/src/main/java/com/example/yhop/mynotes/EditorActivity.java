@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class EditorActivity extends AppCompatActivity {
 
@@ -67,8 +68,25 @@ public class EditorActivity extends AppCompatActivity {
                 } else {
                   insertNote(newText);
                 }
+                break;
+            case Intent.ACTION_EDIT:
+                if(newText.length() == 0){
+                    // deleteNote();
+                } else if(oldText.equals(newText)){
+                    setResult(RESULT_CANCELED);
+                } else {
+                    updateNote(newText);
+                }
         }
         finish();
+    }
+
+    private void updateNote(String noteText) {
+        ContentValues values = new ContentValues();
+        values.put(DBOpenHelper.NOTE_TEXT, noteText);
+        getContentResolver().update(NotesProvider.CONTENT_URI, values, noteFilter, null);
+        Toast.makeText(this, "Note updated", Toast.LENGTH_LONG).show();
+        setResult(RESULT_OK);
     }
 
     private void insertNote(String noteText) {
