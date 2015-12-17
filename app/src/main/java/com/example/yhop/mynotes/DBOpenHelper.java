@@ -7,35 +7,37 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBOpenHelper extends SQLiteOpenHelper{
 
-    private static final String DATABASE_NANE = "Notes.db";
+    private static final String DATABASE_NAME = "notes.db";
     private static final int DATABASE_VERSION = 1;
 
-    private static final String TABLE_NOTES = "notes";
-    private static final String NOTE_ID = "_id";
+    public static final String TABLE_NOTES = "notes";
+    public static final String NOTE_ID = "_id";
     public static final String NOTE_TEXT = "noteText";
-    private static final String NOTE_CREATE = "noteCreated";
+    public static final String NOTE_CREATED = "noteCreated";
 
     public static final String[] ALL_COLUMNS =
-            {NOTE_ID, NOTE_TEXT, NOTE_CREATE};
+            {NOTE_ID, NOTE_TEXT, NOTE_CREATED};
 
     private static final String TABLE_CREATE =
             "CREATE TABLE " + TABLE_NOTES + " (" +
                     NOTE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    NOTE_TEXT + "TEXT, " +
-                    NOTE_CREATE + "TEXT default CURRENT TIMESTAMP" + ")";
+                    NOTE_TEXT + " TEXT, " +
+                    NOTE_CREATED + " TEXT default CURRENT_TIMESTAMP" +
+                    ")";
 
 
     public DBOpenHelper(Context context) {
-        super(context, DATABASE_NANE, null, DATABASE_VERSION);
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
+        db.execSQL(TABLE_CREATE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NOTES);
+        onCreate(db);
     }
 }
