@@ -18,8 +18,9 @@ public class NotesProvider extends ContentProvider{
     private static final int NOTES = 1;
     private static final int NOTES_ID = 2;
 
-    private static final UriMatcher uriMatcher =
-            new UriMatcher(UriMatcher.NO_MATCH);
+    private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+
+    public static final String CONTENT_ITEM_TYPE = "Note";
 
     static {
         uriMatcher.addURI(AUTHORITY, BASE_PATH, NOTES);
