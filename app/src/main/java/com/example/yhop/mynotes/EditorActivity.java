@@ -2,6 +2,7 @@ package com.example.yhop.mynotes;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,8 @@ public class EditorActivity extends AppCompatActivity {
 
     private String action;
     private EditText mEditText;
+    private String noteFilter;
+    private String oldText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +28,14 @@ public class EditorActivity extends AppCompatActivity {
         if(uri == null){
             action = Intent.ACTION_INSERT;
             setTitle(getString(R.string.new_note));
+        } else {
+            action = Intent.ACTION_EDIT;
+            noteFilter = DBOpenHelper.NOTE_ID + "=" + uri.getLastPathSegment();
+            Cursor cursor = getContentResolver().query(uri, DBOpenHelper.ALL_COLUMNS, noteFilter, null, null);
+            cursor.moveToFirst();
+            oldText = cursor.getString(cursor.getColumnIndex(DBOpenHelper.NOTE_TEXT));
+            mEditText.setText(oldText);
+            mEditText.requestFocus();
         }
     }
 
