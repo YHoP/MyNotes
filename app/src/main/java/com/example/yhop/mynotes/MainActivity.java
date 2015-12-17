@@ -15,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
@@ -30,11 +29,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         Cursor cursor = getContentResolver().query(NotesProvider.CONTENT_URI, DBOpenHelper.ALL_COLUMNS, null, null, null, null);
 
-        String[] from = {DBOpenHelper.NOTE_TEXT};
-        int[] to = {android.R.id.text1};
+        //  String[] from = {DBOpenHelper.NOTE_TEXT};
+        //  int[] to = {android.R.id.text1};
 
         //  mCursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor, from, to, 0);
-        mCursorAdapter = new SimpleCursorAdapter(this, R.layout.note_list_item, cursor, from, to, 0);
+        //  mCursorAdapter = new SimpleCursorAdapter(this, R.layout.note_list_item, cursor, from, to, 0);
+
+        mCursorAdapter = new NotesCursorAdapter(this, null, 0);
         ListView list = (ListView)findViewById(android.R.id.list);
         list.setAdapter(mCursorAdapter);
 
