@@ -33,7 +33,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         String[] from = {DBOpenHelper.NOTE_TEXT};
         int[] to = {android.R.id.text1};
 
-        mCursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor, from, to, 0);
+        //  mCursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor, from, to, 0);
+        mCursorAdapter = new SimpleCursorAdapter(this, R.layout.note_list_item, cursor, from, to, 0);
         ListView list = (ListView)findViewById(android.R.id.list);
         list.setAdapter(mCursorAdapter);
 
